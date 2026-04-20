@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import DocDetail from '../views/DocDetail.vue'
 
@@ -15,8 +15,12 @@ const routes = [
   }
 ]
 
+const useHashRouter = import.meta.env.VITE_USE_HASH_ROUTER === 'true'
+
 const router = createRouter({
-  history: createWebHistory(),
+  history: useHashRouter
+    ? createWebHashHistory(import.meta.env.BASE_URL)
+    : createWebHistory(import.meta.env.BASE_URL),
   routes
 })
 

@@ -1,4 +1,6 @@
-const DATA_URL = '/data/documents.json'
+const trimTrailingSlash = (value) => String(value || '').replace(/\/+$/, '')
+const baseUrl = trimTrailingSlash(import.meta.env.BASE_URL || '/')
+const DATA_URL = `${baseUrl || ''}/data/documents.json`
 
 let payloadCache = null
 let payloadPromise = null

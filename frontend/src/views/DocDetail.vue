@@ -151,10 +151,12 @@ const pinchState = {
   startDistance: 0,
   startScale: 1
 }
+const useImageProxy = import.meta.env.VITE_USE_IMAGE_PROXY === 'true'
 
 marked.setOptions({ gfm: true, breaks: true })
 
 const proxyImageUrl = (rawUrl) => {
+  if (!useImageProxy) return rawUrl
   try {
     const parsed = new URL(rawUrl)
     if (!parsed.hostname.endsWith('youdao.com')) return rawUrl
