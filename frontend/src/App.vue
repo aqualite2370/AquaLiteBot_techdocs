@@ -49,30 +49,6 @@
 
     <div class="weather-overlay" aria-hidden="true">
       <div class="weather-stage" :class="`weather-${weatherMode}`">
-        <template v-if="weatherMode === 'sunny'">
-          <div class="sun-spectrum"></div>
-          <div class="sun-halo"></div>
-          <div class="sun-core"></div>
-          <div class="sun-rays"></div>
-          <div class="sun-projection"></div>
-          <div class="sun-cloud-layer">
-            <span
-              v-for="cloud in sunClouds"
-              :key="cloud.id"
-              class="sun-cloud"
-              :style="sunCloudStyle(cloud)"
-            ></span>
-          </div>
-          <div class="mote-layer">
-            <span
-              v-for="mote in sunMotes"
-              :key="mote.id"
-              class="sun-mote"
-              :style="sunMoteStyle(mote)"
-            ></span>
-          </div>
-        </template>
-
         <template v-if="weatherMode === 'rainy'">
           <div class="rain-layer">
             <span
@@ -244,17 +220,10 @@ const isPointerActive = ref(false)
 const weatherMode = ref('snowy')
 const rainDrops = ref([])
 const snowFlakes = ref([])
-const sunMotes = ref([])
 const ripples = ref([])
 const weatherOptions = [
-  { value: 'sunny', label: '晴' },
   { value: 'rainy', label: '雨' },
   { value: 'snowy', label: '雪' }
-]
-const sunClouds = [
-  { id: 1, top: 10, left: 54, scale: 1.1, opacity: 0.72, drift: 26, delay: 0.2, duration: 20 },
-  { id: 2, top: 17, left: 70, scale: 0.88, opacity: 0.64, drift: 20, delay: 1.3, duration: 24 },
-  { id: 3, top: 23, left: 46, scale: 1.26, opacity: 0.56, drift: 32, delay: 0.8, duration: 27 }
 ]
 
 const introSnowMists = [
@@ -341,7 +310,6 @@ const currentPageTitle = computed(() => {
 
 const weatherLabel = computed(() => {
   const map = {
-    sunny: '晴天模式',
     rainy: '雨天模式',
     snowy: '雪天模式'
   }
@@ -355,8 +323,11 @@ const cursorGlowStyle = computed(() => ({
 }))
 
 const checkScreen = () => {
-  isMobile.value = window.innerWidth < 1024
+  const nextIsMobile = window.innerWidth < 1024
+  const hasChanged = nextIsMobile !== isMobile.value
+  isMobile.value = nextIsMobile
   if (!isMobile.value) isMobileMenuOpen.value = false
+  if (hasChanged) setWeather(weatherMode.value)
 }
 
 const toggleMenu = () => {
@@ -371,7 +342,11 @@ const openMobileMenu = () => {
   if (isMobile.value) isMobileMenuOpen.value = true
 }
 
-const createRainDrops = (count = 52) => {
+const getRainDropCount = () => (isMobile.value ? 18 : 36)
+
+const getSnowFlakeCount = () => (isMobile.value ? 14 : 28)
+
+const createRainDrops = (count = getRainDropCount()) => {
   return Array.from({ length: count }, (_, index) => ({
     id: index,
     x: Math.random() * 100,
@@ -382,7 +357,7 @@ const createRainDrops = (count = 52) => {
   }))
 }
 
-const createSnowFlakes = (count = 40) => {
+const createSnowFlakes = (count = getSnowFlakeCount()) => {
   return Array.from({ length: count }, (_, index) => ({
     id: index,
     x: Math.random() * 100,
@@ -394,36 +369,21 @@ const createSnowFlakes = (count = 40) => {
   }))
 }
 
-const createSunMotes = (count = 20) => {
-  return Array.from({ length: count }, (_, index) => ({
-    id: index,
-    x: Math.random() * 100,
-    y: 8 + Math.random() * 78,
-    delay: Math.random() * 6,
-    duration: 4 + Math.random() * 5,
-    size: 2 + Math.random() * 3,
-    drift: -20 + Math.random() * 40
-  }))
-}
-
 const setWeather = (mode) => {
   weatherMode.value = mode
 
   if (mode === 'rainy') {
     rainDrops.value = createRainDrops()
     snowFlakes.value = []
-    sunMotes.value = []
     return
   }
 
   if (mode === 'snowy') {
     snowFlakes.value = createSnowFlakes()
     rainDrops.value = []
-    sunMotes.value = []
     return
   }
 
-  sunMotes.value = createSunMotes()
   rainDrops.value = []
   snowFlakes.value = []
 }
@@ -457,26 +417,6 @@ const snowLandStyle = (flake) => ({
   animationDuration: `${flake.duration}s`
 })
 
-const sunMoteStyle = (mote) => ({
-  left: `${mote.x}%`,
-  top: `${mote.y}%`,
-  width: `${mote.size}px`,
-  height: `${mote.size}px`,
-  animationDelay: `${mote.delay}s`,
-  animationDuration: `${mote.duration}s`,
-  '--drift': `${mote.drift}px`
-})
-
-const sunCloudStyle = (cloud) => ({
-  left: `${cloud.left}%`,
-  top: `${cloud.top}%`,
-  opacity: cloud.opacity,
-  '--cloud-scale': cloud.scale,
-  '--cloud-drift': `${cloud.drift}px`,
-  animationDelay: `${cloud.delay}s`,
-  animationDuration: `${cloud.duration}s`
-})
-
 const handlePointerMove = (event) => {
   const { clientX, clientY } = event
   isPointerActive.value = true
@@ -508,10 +448,11 @@ const handlePointerDown = (event) => {
     id: ++rippleIdSeed,
     x: event.clientX,
     y: event.clientY,
-    size: 90 + Math.random() * 110
+    size: isMobile.value ? 62 + Math.random() * 56 : 90 + Math.random() * 110
   }
 
-  ripples.value.push(ripple)
+  const maxRipples = isMobile.value ? 2 : 6
+  ripples.value = [...ripples.value.slice(-(maxRipples - 1)), ripple]
 
   window.setTimeout(() => {
     ripples.value = ripples.value.filter(item => item.id !== ripple.id)
@@ -911,10 +852,6 @@ body {
   opacity: 0.98;
 }
 
-.weather-stage.weather-sunny {
-  filter: saturate(1.14) brightness(1.1);
-}
-
 .weather-stage.weather-rainy {
   filter: saturate(1.02) contrast(1.02) brightness(1.02);
   opacity: 0.52;
@@ -923,134 +860,6 @@ body {
 .weather-stage.weather-snowy {
   filter: brightness(1.18) contrast(1.12);
   mix-blend-mode: screen;
-}
-
-.sun-spectrum {
-  position: absolute;
-  top: -24%;
-  right: -12%;
-  width: 720px;
-  height: 720px;
-  border-radius: 9999px;
-  background: conic-gradient(
-    from 210deg,
-    rgba(251, 191, 36, 0.24),
-    rgba(251, 146, 60, 0.24),
-    rgba(244, 114, 182, 0.24),
-    rgba(192, 132, 252, 0.24),
-    rgba(56, 189, 248, 0.2),
-    rgba(251, 191, 36, 0.24)
-  );
-  filter: blur(14px);
-  mix-blend-mode: screen;
-  opacity: 0;
-  animation: spin-rays 30s linear infinite reverse, sun-spectrum-cycle 18s ease-in-out infinite;
-}
-
-.sun-core {
-  position: absolute;
-  top: 7%;
-  right: 12%;
-  width: 112px;
-  height: 112px;
-  border-radius: 9999px;
-  background: radial-gradient(circle, rgba(255, 250, 200, 0.95) 0%, rgba(255, 210, 110, 0.82) 56%, rgba(255, 193, 7, 0.2) 100%);
-  box-shadow: 0 0 38px rgba(255, 214, 122, 0.4);
-  animation: sun-core-cycle 18s ease-in-out infinite;
-}
-
-.sun-halo {
-  position: absolute;
-  top: -8%;
-  right: -2%;
-  width: 420px;
-  height: 420px;
-  border-radius: 9999px;
-  filter: blur(8px);
-  background: radial-gradient(circle, rgba(251, 191, 36, 0.26) 0%, rgba(253, 230, 138, 0.08) 45%, transparent 72%);
-  animation: sun-halo-cycle 18s ease-in-out infinite;
-}
-
-.sun-rays {
-  position: absolute;
-  top: -20%;
-  right: -6%;
-  width: 560px;
-  height: 560px;
-  border-radius: 9999px;
-  background: conic-gradient(from 120deg, rgba(255, 235, 154, 0.24), rgba(255, 235, 154, 0), rgba(255, 235, 154, 0.15), rgba(255, 235, 154, 0));
-  animation: spin-rays 16s linear infinite, sun-rays-cycle 18s ease-in-out infinite;
-  mix-blend-mode: screen;
-}
-
-.sun-projection {
-  position: absolute;
-  top: 12%;
-  right: 18%;
-  width: 52vw;
-  height: 42vh;
-  transform: skewX(-18deg) rotate(-16deg);
-  transform-origin: top right;
-  background: linear-gradient(110deg, rgba(255, 223, 128, 0.4), rgba(255, 223, 128, 0.14) 34%, transparent 72%);
-  filter: blur(3px);
-  animation: sun-projection-cycle 18s ease-in-out infinite;
-}
-
-.sun-cloud-layer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.sun-cloud {
-  position: absolute;
-  width: 180px;
-  height: 52px;
-  border-radius: 9999px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.72), rgba(226, 232, 240, 0.42));
-  transform: scale(var(--cloud-scale));
-  transform-origin: center;
-  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.12);
-  animation-name: cloud-drift;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-
-.sun-cloud::before,
-.sun-cloud::after {
-  content: '';
-  position: absolute;
-  border-radius: 9999px;
-  background: inherit;
-}
-
-.sun-cloud::before {
-  width: 74px;
-  height: 54px;
-  left: 18px;
-  top: -22px;
-}
-
-.sun-cloud::after {
-  width: 88px;
-  height: 64px;
-  right: 22px;
-  top: -30px;
-}
-
-.mote-layer {
-  position: absolute;
-  inset: 0;
-}
-
-.sun-mote {
-  position: absolute;
-  border-radius: 9999px;
-  background: rgba(254, 240, 138, 0.5);
-  box-shadow: 0 0 10px rgba(254, 240, 138, 0.35);
-  animation-name: mote-float;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
 }
 
 .rain-layer,
@@ -1134,10 +943,6 @@ body {
   bottom: 0;
   height: 24vh;
   opacity: 0.88;
-}
-
-.ground-sunny {
-  background: linear-gradient(to top, rgba(245, 158, 11, 0.18), rgba(251, 191, 36, 0.06) 46%, transparent 100%);
 }
 
 .ground-rainy {
@@ -1407,11 +1212,6 @@ body {
 .text-primary { color: var(--color-primary); }
 .border-primary { border-color: var(--color-primary); }
 
-@keyframes spin-rays {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
 @keyframes rain-fall {
   0% {
     transform: translate3d(0, 0, 0);
@@ -1433,75 +1233,6 @@ body {
   }
   50% {
     transform: translate3d(var(--cloud-drift), -6px, 0) scale(var(--cloud-scale));
-  }
-}
-
-@keyframes sun-core-cycle {
-  0%,
-  42%,
-  100% {
-    background: radial-gradient(circle, rgba(255, 250, 200, 0.95) 0%, rgba(255, 210, 110, 0.82) 56%, rgba(255, 193, 7, 0.2) 100%);
-    box-shadow: 0 0 38px rgba(255, 214, 122, 0.4);
-  }
-  60%,
-  84% {
-    background: radial-gradient(circle, rgba(255, 241, 214, 0.94) 0%, rgba(251, 146, 60, 0.8) 48%, rgba(244, 114, 182, 0.28) 100%);
-    box-shadow: 0 0 46px rgba(251, 146, 60, 0.48), 0 0 72px rgba(236, 72, 153, 0.26);
-  }
-}
-
-@keyframes sun-halo-cycle {
-  0%,
-  42%,
-  100% {
-    background: radial-gradient(circle, rgba(251, 191, 36, 0.26) 0%, rgba(253, 230, 138, 0.08) 45%, transparent 72%);
-  }
-  60%,
-  84% {
-    background: radial-gradient(circle, rgba(251, 146, 60, 0.36) 0%, rgba(244, 114, 182, 0.14) 46%, transparent 74%);
-  }
-}
-
-@keyframes sun-rays-cycle {
-  0%,
-  42%,
-  100% {
-    opacity: 0.78;
-  }
-  60%,
-  84% {
-    opacity: 0.96;
-  }
-}
-
-@keyframes sun-projection-cycle {
-  0%,
-  42%,
-  100% {
-    background: linear-gradient(110deg, rgba(255, 223, 128, 0.4), rgba(255, 223, 128, 0.14) 34%, transparent 72%);
-  }
-  60%,
-  84% {
-    background: linear-gradient(
-      110deg,
-      rgba(251, 146, 60, 0.34),
-      rgba(244, 114, 182, 0.18) 28%,
-      rgba(167, 139, 250, 0.14) 50%,
-      rgba(56, 189, 248, 0.1) 66%,
-      transparent 82%
-    );
-  }
-}
-
-@keyframes sun-spectrum-cycle {
-  0%,
-  42%,
-  100% {
-    opacity: 0;
-  }
-  60%,
-  84% {
-    opacity: 0.62;
   }
 }
 
@@ -1542,18 +1273,6 @@ body {
   100% {
     opacity: 0;
     transform: translateX(-50%) scale(1.9);
-  }
-}
-
-@keyframes mote-float {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0);
-    opacity: 0.18;
-  }
-  50% {
-    transform: translate3d(var(--drift), -14px, 0);
-    opacity: 0.65;
   }
 }
 
@@ -1742,7 +1461,6 @@ body {
     opacity: 0.8;
   }
 
-  .sun-projection,
   .rain-projection,
   .snow-projection {
     opacity: 0.6;
@@ -1761,13 +1479,6 @@ body {
   .rain-splash,
   .snow-flake,
   .snow-land,
-  .sun-core,
-  .sun-halo,
-  .sun-rays,
-  .sun-projection,
-  .sun-spectrum,
-  .sun-cloud,
-  .sun-mote,
   .intro-shooting-star,
   .intro-star-core,
   .intro-focus-star,
