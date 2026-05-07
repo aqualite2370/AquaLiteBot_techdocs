@@ -3,7 +3,7 @@
     "provider": "youdao-share",
     "share_key": "640449dc469077ec5ed8437e115b925a",
     "share_url": "https://share.note.youdao.com/ynoteshare/index.html?id=640449dc469077ec5ed8437e115b925a&type=notebook&_time=1775739900258",
-    "migrated_at": "2026-05-03T12:14:07.494966+00:00"
+    "migrated_at": "2026-05-07T16:23:48.607007+00:00"
   },
   "categories": [
     {
@@ -25,12 +25,6 @@
       "description": "有道云笔记文件夹：实用！！"
     },
     {
-      "id": "4e398bf5f59cc5c1e89eff5390ee3174",
-      "name": "指令列表-支持的功能",
-      "icon": "ri-book-open-line",
-      "description": "有道云笔记文件夹：指令列表-支持的功能"
-    },
-    {
       "id": "a3fa4a02800b66467c603e3576aec565",
       "name": "音游专区",
       "icon": "ri-music-2-line",
@@ -38,6 +32,40 @@
     }
   ],
   "documents": [
+    {
+      "id": "432216941d391d612f808fcd77aa3f3e",
+      "title": "Maimai 自助上传成绩",
+      "content": "# Maimai 自助上传成绩\n\n## 描述\n- 请参考下方功能明与示例\n\n## 示例\n\n![image](https://note.youdao.com/yws/public/resource/640449dc469077ec5ed8437e115b925a/xmlnote/432216941d391d612f808fcd77aa3f3e/13fa982ae17bd25e72773e72d2f66a77/338)\n",
+      "category": "a3fa4a02800b66467c603e3576aec565",
+      "tags": [
+        "音游专区",
+        "有道迁移"
+      ],
+      "order": 1,
+      "source": {
+        "path": "/a3fa4a02800b66467c603e3576aec565/432216941d391d612f808fcd77aa3f3e",
+        "created_at": "2026-05-07T15:53:02+00:00",
+        "updated_at": "2026-05-07T16:23:27+00:00",
+        "size": 1298085
+      }
+    },
+    {
+      "id": "80dd24d52c9f79d0f9ef4fc3d0c434b1",
+      "title": "相关信息",
+      "content": "# 相关信息\n\n## 描述\n- 发联系方式：奶茶sama（QQ?259891410）\n- 群聊丽站：775402634\n- ?2/3/4 群已解散，以中轾兑为准\n\n## 示例\n\n![image](https://note.youdao.com/yws/public/resource/640449dc469077ec5ed8437e115b925a/xmlnote/80dd24d52c9f79d0f9ef4fc3d0c434b1/a872ab7782fac309195c1f0259ddfe0b/149)\n",
+      "category": "root",
+      "tags": [
+        "根目录",
+        "有道迁移"
+      ],
+      "order": 2,
+      "source": {
+        "path": "/df59253c0c062a20840e38b91a84e30a/80dd24d52c9f79d0f9ef4fc3d0c434b1",
+        "created_at": "2023-01-11T17:04:11+00:00",
+        "updated_at": "2026-05-07T15:54:22+00:00",
+        "size": 54156
+      }
+    },
     {
       "id": "52ab5f45dbe7b819e30f50fdbdadba87",
       "title": "网易云音乐点歌",
@@ -47,7 +75,7 @@
         "实用！！",
         "有道迁移"
       ],
-      "order": 1,
+      "order": 3,
       "source": {
         "path": "/66991e48e6a927f7a4b86a19a925e6ca/52ab5f45dbe7b819e30f50fdbdadba87",
         "created_at": "2023-01-11T16:51:00+00:00",
@@ -64,7 +92,7 @@
         "实用！！",
         "有道迁移"
       ],
-      "order": 2,
+      "order": 4,
       "source": {
         "path": "/66991e48e6a927f7a4b86a19a925e6ca/a12df06cc0bf85ddd01155fe53961a14",
         "created_at": "2025-12-20T04:53:54+00:00",
@@ -81,7 +109,7 @@
         "娱乐杂项",
         "有道迁移"
       ],
-      "order": 3,
+      "order": 5,
       "source": {
         "path": "/b65448902269ec8d13ab3cf265d9ea0d/278a35847b63d5be2f013cfa6a87dbf1",
         "created_at": "2026-04-20T04:51:00+00:00",
@@ -98,7 +126,7 @@
         "实用！！",
         "有道迁移"
       ],
-      "order": 4,
+      "order": 6,
       "source": {
         "path": "/66991e48e6a927f7a4b86a19a925e6ca/82a36e48431e38f7343a2d976039b65c",
         "created_at": "2026-01-18T13:10:14+00:00",
@@ -115,29 +143,12 @@
         "实用！！",
         "有道迁移"
       ],
-      "order": 5,
+      "order": 7,
       "source": {
         "path": "/66991e48e6a927f7a4b86a19a925e6ca/a1c116b8e0eedfb7af32f242f87f9ab8",
         "created_at": "2026-03-22T00:32:25+00:00",
         "updated_at": "2026-03-22T00:32:25+00:00",
         "size": 2346139
-      }
-    },
-    {
-      "id": "80dd24d52c9f79d0f9ef4fc3d0c434b1",
-      "title": "相关信息",
-      "content": "# 相关信息\n\n## 描述\n- 发联系方式：奶茶sama（QQ?259891410）\n- 群聊丽站：775402634\n- ?2/3/4 群已解散，以中轾兑为准\n\n## 示例\n\n![image](https://note.youdao.com/yws/public/resource/640449dc469077ec5ed8437e115b925a/xmlnote/80dd24d52c9f79d0f9ef4fc3d0c434b1/a872ab7782fac309195c1f0259ddfe0b/149)\n",
-      "category": "root",
-      "tags": [
-        "根目录",
-        "有道迁移"
-      ],
-      "order": 6,
-      "source": {
-        "path": "/df59253c0c062a20840e38b91a84e30a/80dd24d52c9f79d0f9ef4fc3d0c434b1",
-        "created_at": "2023-01-11T17:04:11+00:00",
-        "updated_at": "2026-01-06T13:18:22+00:00",
-        "size": 54270
       }
     },
     {
@@ -149,7 +160,7 @@
         "娱乐杂项",
         "有道迁移"
       ],
-      "order": 7,
+      "order": 8,
       "source": {
         "path": "/b65448902269ec8d13ab3cf265d9ea0d/f9cba3a872a846907cc5dbea450856a0",
         "created_at": "2025-06-13T04:27:10+00:00",
@@ -166,29 +177,12 @@
         "娱乐杂项",
         "有道迁移"
       ],
-      "order": 8,
+      "order": 9,
       "source": {
         "path": "/b65448902269ec8d13ab3cf265d9ea0d/3058e61f4eac3b3f29284a39b1ceb9bb",
         "created_at": "2025-06-11T17:00:32+00:00",
         "updated_at": "2025-06-11T17:00:32+00:00",
         "size": 504713
-      }
-    },
-    {
-      "id": "3a6185475d966d09b8eac775def93779",
-      "title": "用前必读！！",
-      "content": "# 用前必读！！\n\n## 描述\n- 请参考下方功能明与示例\n\n## 示例\n\n![image](https://note.youdao.com/yws/public/resource/640449dc469077ec5ed8437e115b925a/xmlnote/3a6185475d966d09b8eac775def93779/ccb8085d7bac6003c0b36b665925e647/234)\n",
-      "category": "4e398bf5f59cc5c1e89eff5390ee3174",
-      "tags": [
-        "指令列表-支持的功能",
-        "有道迁移"
-      ],
-      "order": 9,
-      "source": {
-        "path": "/4e398bf5f59cc5c1e89eff5390ee3174/3a6185475d966d09b8eac775def93779",
-        "created_at": "2023-09-19T03:49:55+00:00",
-        "updated_at": "2025-01-30T10:22:45+00:00",
-        "size": 270124
       }
     },
     {
@@ -444,23 +438,6 @@
         "created_at": "2023-01-11T16:49:11+00:00",
         "updated_at": "2023-01-11T16:50:16+00:00",
         "size": 416191
-      }
-    },
-    {
-      "id": "b1234a325cdbbc3543eab922ed2c7eea",
-      "title": "奶茶酱的过去",
-      "content": "# 奶茶酱的过去\n\n## 描述\n- 历史文档归档页，记录旧版朵料入口与迁移说明\n\n## 参链\n- https://www.showdoc.com.cn/ncj114514/8843059108042576\n- https://note.youdao.com/ynoteshare1/index.html?id=31dc3ca4d79fdcc36240e95d4de06198&type=note\n\n## 示例\n\n![image](https://note.youdao.com/yws/public/resource/640449dc469077ec5ed8437e115b925a/xmlnote/b1234a325cdbbc3543eab922ed2c7eea/7e9186821c9da79b00a5bfc2f4da9247/19)\n",
-      "category": "root",
-      "tags": [
-        "根目录",
-        "有道迁移"
-      ],
-      "order": 25,
-      "source": {
-        "path": "/df59253c0c062a20840e38b91a84e30a/b1234a325cdbbc3543eab922ed2c7eea",
-        "created_at": "2023-01-11T16:43:22+00:00",
-        "updated_at": "2023-01-11T16:45:16+00:00",
-        "size": 199264
       }
     }
   ]
